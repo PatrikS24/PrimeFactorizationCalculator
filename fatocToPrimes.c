@@ -31,26 +31,30 @@ int main() {
     long* pFactors = factorize(input);
     printList(pFactors);
     free(pFactors);
+    pFactors = NULL;
 
     return 0;
 }
 
+
+// Function that takes an input and returns a pointer to an array with the primes that make up the composite number
 long *factorize(long input) {
     long* pPossibleFactors = possiblePrimeFactors(input);
     long* pFactors = calloc(35, sizeof(long));
-
+    
     int i = 0;
     while (!isPrime(input)) {
         long factor = getFactor(pPossibleFactors, input);
         if (factor == 0) {
             break;
         }else {
+            // Add the factor to the array of known factors and divide the current number by the factor for the next iteration
             pFactors[i] = factor;
             i++;
             input /= factor;
         }
     }
-    pFactors[i] = input;
+    pFactors[i] = input; // Get the final factor
     free(pPossibleFactors);
     return pFactors;
 }
@@ -69,9 +73,11 @@ bool isPrime(long n) {
     return true;
 }
 
+
+// Returns a pointer to an array of all possible prime factors that the input number can have
 long *possiblePrimeFactors(long input) {
     long numberOfPrimes = (long)sqrt(input/(log(input) - 1));
-    long *pPrimes = calloc(numberOfPrimes, sizeof(long));
+    long *pPrimes = calloc(numberOfPrimes + 1, sizeof(long));
 
     if (pPrimes == NULL) {
         perror("Could not allocate memory");
@@ -79,9 +85,9 @@ long *possiblePrimeFactors(long input) {
     }
 
     pPrimes[0] = 2;
-    long arrayIndex = 1;
+    int arrayIndex = 1;
 
-    for (int i = 3; i <= numberOfPrimes; i += 2) {
+    for (int i = 3; arrayIndex <= numberOfPrimes; i += 2) {
         if (isPrime(i)) {
             pPrimes[arrayIndex] = i;
             arrayIndex++;
@@ -90,16 +96,16 @@ long *possiblePrimeFactors(long input) {
     return pPrimes;
 }
 
+// Returns 0 if input is a prime number otherwise it returns a factor of the input number
 long getFactor(long* primeList, long input){
     if (isPrime(input)) {
         return 0;
     }
 
     int i = 0;
-    long curr = primeList[i];
-    while (curr != 0) {
-        long curr = primeList[i];
-        if (curr == 0) {
+    // Loops through the list of prime numbers to check what prime number the input can be evenly divided by
+    while (primeList[i] != 0) {
+        if (primeList[i] == 0) {
             break;
         }
         if (input % primeList[i] == 0) {
@@ -112,13 +118,11 @@ long getFactor(long* primeList, long input){
 
 void printList(long* list) { 
     int i = 0;
-    long curr = list[i];
-    while (curr != 0) {
-        long curr = list[i];
-        if (curr == 0) {
+    while (list[i] != 0) {
+        if (list[i] == 0) {
             break;
         }
-        printf("%d, ", curr);
+        printf("%d, ", list[i]);
         i++;
     }
 }
