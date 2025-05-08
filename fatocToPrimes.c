@@ -53,6 +53,9 @@ unsigned long *factorize(unsigned long input) {
         }
     }
     pFactors[i] = input; // Get the final factor
+    unsigned long* temp = realloc(pFactors, (i + 1) * sizeof(unsigned long*));
+    pFactors = temp;
+    temp = NULL;
     free(pPossibleFactors);
     return pFactors;
 }
