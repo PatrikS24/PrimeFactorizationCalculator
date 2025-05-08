@@ -38,8 +38,6 @@ unsigned long *factorize(unsigned long input) {
     unsigned long* pPossibleFactors = possiblePrimeFactors(input);
     unsigned long* pFactors = calloc(35, sizeof(unsigned long));
 
-    // TODO reallocate memory for correct size of pFactors array
-    
     int i = 0;
     while (!isPrime(input)) {
         unsigned long factor = getFactor(pPossibleFactors, input);
@@ -70,7 +68,6 @@ bool isPrime(unsigned long n) {
             return false;
         }
     }
-
     return true;
 }
 
@@ -102,7 +99,6 @@ unsigned long getFactor(unsigned long* primeList, unsigned long input){
     if (isPrime(input)) {
         return 0;
     }
-
     int i = 0;
     // Loops through the list of prime numbers to check what prime number the input can be evenly divided by
     while (primeList[i] != 0) {
