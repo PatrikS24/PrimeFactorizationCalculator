@@ -12,25 +12,19 @@ unsigned long getFactor(unsigned long* primeList, unsigned long input);
 int main() {
 
     unsigned long input = 0;
-    
     bool validInput = false;
     while (!validInput)
     {
-        printf("Enter the number you want to factorize: ");
+        printf("Enter a positive integer between 1 and %lu that you want to factorize: ", ULONG_MAX);
         scanf("%lu", &input);
-        if (input <= 0) {
-            printf("Please enter a number greater than 0\n\n");
-            continue;
-        } else if(isPrime(input)) {
+        if(isPrime(input)) {
             printf("The input you gave is prime and can not be factorized\n\n");
         } else {
             validInput = true;
         }
     }
-    input = ULONG_MAX - 1;
     printf("The factors are:\n");
     unsigned long* pFactors = factorize(input);
-    printf("%lu\n", ULONG_MAX);
     printList(pFactors);
     free(pFactors);
     pFactors = NULL;
