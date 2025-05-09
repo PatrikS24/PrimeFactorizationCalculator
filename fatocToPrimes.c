@@ -23,7 +23,7 @@ int main() {
             validInput = true;
         }
     }
-    printf("The factors are:\n");
+    printf("The prime factors are:\n");
     unsigned long* pFactors = factorize(input);
     printList(pFactors);
     free(pFactors);
