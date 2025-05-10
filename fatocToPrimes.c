@@ -15,12 +15,12 @@ int main() {
     bool validInput = false;
     while (!validInput)
     {
-        printf("Enter a positive integer between 1 and 9999999999999999 that you want to factorize: ");
+        printf("Enter a positive integer between 1 and 140737488355328 that you want to factorize: ");
         scanf("%llu", &input);
         if(isPrime(input)) {
             printf("The input you gave is prime and can not be factorized\n\n");
-        } else if (input > 9999999999999999) {
-            printf("Please enter a number smaller than 9999999999999999\n\n");
+        } else if (input > 140737488355328) {
+            printf("Please enter a number smaller than 140737488355328\n\n");
         } else {
             validInput = true;
         }
@@ -38,7 +38,11 @@ int main() {
 // Function that takes an input and returns a pointer to an array with the primes that make up the composite number
 unsigned long long *factorize(unsigned long long input) {
     unsigned long long* pPossibleFactors = possiblePrimeFactors(input);
-    unsigned long long* pFactors = calloc(33, sizeof(unsigned long long));
+    unsigned long long* pFactors = calloc(48, sizeof(unsigned long long));
+    if (pFactors == NULL) {
+        printf("Failed to allocate memory");
+        exit(1);
+    }
 
     long i = 0;
     while (!isPrime(input)) {
