@@ -3,20 +3,20 @@
 #include <stdlib.h>
 #include <math.h>
 
-unsigned long *possiblePrimeFactors(unsigned long input); 
-unsigned long *factorize(unsigned long input); 
-bool isPrime(unsigned long input);
-void printList(unsigned long* list);
-unsigned long getFactor(unsigned long* primeList, unsigned long input);
+unsigned long long *possiblePrimeFactors(unsigned long long input); 
+unsigned long long *factorize(unsigned long long input); 
+bool isPrime(unsigned long long input);
+void printList(unsigned long long* list);
+unsigned long long getFactor(unsigned long long* primeList, unsigned long long input);
 
 int main() {
 
-    unsigned long input = 0;
+    unsigned long long input = 0;
     bool validInput = false;
     while (!validInput)
     {
-        printf("Enter a positive integer between 1 and %lu that you want to factorize: ", ULONG_MAX);
-        scanf("%lu", &input);
+        printf("Enter a positive integer between 1 and %llu that you want to factorize: ", ULONG_LONG_MAX);
+        scanf("%llu", &input);
         if(isPrime(input)) {
             printf("The input you gave is prime and can not be factorized\n\n");
         } else {
@@ -24,7 +24,7 @@ int main() {
         }
     }
     printf("The prime factors are:\n");
-    unsigned long* pFactors = factorize(input);
+    unsigned long long* pFactors = factorize(input);
     printList(pFactors);
     free(pFactors);
     pFactors = NULL;
@@ -34,13 +34,13 @@ int main() {
 
 
 // Function that takes an input and returns a pointer to an array with the primes that make up the composite number
-unsigned long *factorize(unsigned long input) {
-    unsigned long* pPossibleFactors = possiblePrimeFactors(input);
-    unsigned long* pFactors = calloc(33, sizeof(unsigned long));
+unsigned long long *factorize(unsigned long long input) {
+    unsigned long long* pPossibleFactors = possiblePrimeFactors(input);
+    unsigned long long* pFactors = calloc(33, sizeof(unsigned long long));
 
-    int i = 0;
+    long i = 0;
     while (!isPrime(input)) {
-        unsigned long factor = getFactor(pPossibleFactors, input);
+        unsigned long long factor = getFactor(pPossibleFactors, input);
         if (factor == 0) {
             break;
         }else {
@@ -51,7 +51,7 @@ unsigned long *factorize(unsigned long input) {
         }
     }
     pFactors[i] = input; // Get the final factor
-    unsigned long* temp = realloc(pFactors, (i + 1) * sizeof(unsigned long*));
+    unsigned long long* temp = realloc(pFactors, (i + 1) * sizeof(unsigned long long));
     if (temp == NULL) {
         printf("Failed to reallocate memory.");
     } else {
@@ -62,12 +62,12 @@ unsigned long *factorize(unsigned long input) {
     return pFactors;
 }
 
-bool isPrime(unsigned long n) {
+bool isPrime(unsigned long long n) {
     if (n < 1) return false;
     if (n == 2) return true;
     if (n % 2 == 0) return false;
 
-    for (int i = 3; i * i <= n; i += 2) {
+    for (long i = 3; i * i <= n; i += 2) {
         if (n % i == 0) {
             return false;
         }
@@ -77,9 +77,9 @@ bool isPrime(unsigned long n) {
 
 
 // Returns a pointer to an array of all possible prime factors that the input number can have
-unsigned long *possiblePrimeFactors(unsigned long input) {
-    unsigned long numberOfPrimes = (unsigned long)sqrt(input/(log(input) - 1));
-    unsigned long *pPrimes = calloc(numberOfPrimes + 1, sizeof(unsigned long));
+unsigned long long *possiblePrimeFactors(unsigned long long input) {
+    unsigned long long numberOfPrimes = (unsigned long long)sqrt(input/(log(input) - 1));
+    unsigned long long *pPrimes = calloc(numberOfPrimes + 1, sizeof(unsigned long long));
 
     if (pPrimes == NULL) {
         perror("Could not allocate memory");
@@ -87,8 +87,8 @@ unsigned long *possiblePrimeFactors(unsigned long input) {
     }
 
     pPrimes[0] = 2;
-    int arrayIndex = 1;
-    for (int i = 3; arrayIndex <= numberOfPrimes; i += 2) {
+    long arrayIndex = 1;
+    for (long i = 3; arrayIndex <= numberOfPrimes; i += 2) {
         if (isPrime(i)) {
             pPrimes[arrayIndex] = i;
             arrayIndex++;
@@ -98,14 +98,13 @@ unsigned long *possiblePrimeFactors(unsigned long input) {
 }
 
 // Returns 0 if input is a prime number otherwise it returns a factor of the input number
-unsigned long getFactor(unsigned long* primeList, unsigned long input){
+unsigned long long getFactor(unsigned long long* primeList, unsigned long long input){
     if (isPrime(input)) {
         return 0;
     }
-    int i = 0;
+    long i = 0;
     // Loops through the list of prime numbers to check what prime number the input can be evenly divided by
     while (primeList[i] != 0) {
-        if (primeList[i] == 5 && input == 5555555555) printf("it is five    ");
         if (input % primeList[i] == 0) {
             return primeList[i];
         }
@@ -114,13 +113,13 @@ unsigned long getFactor(unsigned long* primeList, unsigned long input){
     return 0;
 }
 
-void printList(unsigned long* list) { 
-    int i = 0;
+void printList(unsigned long long* list) { 
+    long i = 0;
     while (list[i] != 0) {
         if (list[i] == 0) {
             break;
         }
-        printf("%lu, ", list[i]);
+        printf("%llu, ", list[i]);
         i++;
     }
 }
