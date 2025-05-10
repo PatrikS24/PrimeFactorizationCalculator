@@ -52,8 +52,12 @@ unsigned long *factorize(unsigned long input) {
     }
     pFactors[i] = input; // Get the final factor
     unsigned long* temp = realloc(pFactors, (i + 1) * sizeof(unsigned long*));
-    pFactors = temp;
-    temp = NULL;
+    if (temp == NULL) {
+        printf("Failed to reallocate memory.");
+    } else {
+        pFactors = temp;
+        temp = NULL;
+    }
     free(pPossibleFactors);
     return pFactors;
 }
@@ -84,7 +88,6 @@ unsigned long *possiblePrimeFactors(unsigned long input) {
 
     pPrimes[0] = 2;
     int arrayIndex = 1;
-
     for (int i = 3; arrayIndex <= numberOfPrimes; i += 2) {
         if (isPrime(i)) {
             pPrimes[arrayIndex] = i;
