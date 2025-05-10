@@ -24,6 +24,7 @@ int main() {
         } else {
             validInput = true;
         }
+        while ((getchar()) != '\n'); // Clears the scanf buffer to avoid infinite loop
     }
     printf("The prime factors are:\n");
     unsigned long long* pFactors = factorize(input);
@@ -87,7 +88,7 @@ bool isPrime(unsigned long long n) {
 // Returns a pointer to an array of all possible prime factors that the input number can have
 unsigned long long *possiblePrimeFactors(unsigned long long input) {
     unsigned long long numberOfPrimes = (unsigned long long)sqrt(input/(log(input) - 1));
-    unsigned long long *pPrimes = calloc(numberOfPrimes + 1, sizeof(unsigned long long));
+    unsigned long long *pPrimes = malloc((numberOfPrimes + 2) * sizeof(unsigned long long));
 
     if (pPrimes == NULL) {
         perror("Could not allocate memory");
@@ -108,9 +109,8 @@ unsigned long long *possiblePrimeFactors(unsigned long long input) {
 
 // Returns 0 if input is a prime number otherwise it returns a factor of the input number
 unsigned long long getFactor(unsigned long long* primeList, unsigned long long input){
-    if (isPrime(input)) {
-        return 0;
-    }
+    if (isPrime(input)) return 0;
+    if (input == 0) return 0;
     // Loops through the list of prime numbers to check what prime number the input can be evenly divided by
     long i = 0;
     while (primeList[i] != 0) {
@@ -125,9 +125,6 @@ unsigned long long getFactor(unsigned long long* primeList, unsigned long long i
 void printList(unsigned long long* list) { 
     long i = 0;
     while (list[i] != 0) {
-        if (list[i] == 0) {
-            break;
-        }
         printf("%llu, ", list[i]);
         i++;
     }
