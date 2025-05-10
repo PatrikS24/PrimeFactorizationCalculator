@@ -36,7 +36,7 @@ int main() {
 // Function that takes an input and returns a pointer to an array with the primes that make up the composite number
 unsigned long *factorize(unsigned long input) {
     unsigned long* pPossibleFactors = possiblePrimeFactors(input);
-    unsigned long* pFactors = calloc(35, sizeof(unsigned long));
+    unsigned long* pFactors = calloc(33, sizeof(unsigned long));
 
     int i = 0;
     while (!isPrime(input)) {
