@@ -38,6 +38,7 @@ int main() {
 // Function that takes an input and returns a pointer to an array with the primes that make up the composite number
 unsigned long long *factorize(unsigned long long input) {
     unsigned long long* pPossibleFactors = possiblePrimeFactors(input);
+    //printList(pPossibleFactors);
     unsigned long long* pFactors = calloc(48, sizeof(unsigned long long));
     if (pFactors == NULL) {
         printf("Failed to allocate memory");
@@ -45,9 +46,10 @@ unsigned long long *factorize(unsigned long long input) {
     }
 
     long i = 0;
-    while (!isPrime(input)) {
+    while (true) {
         unsigned long long factor = getFactor(pPossibleFactors, input);
         if (factor == 0) {
+            pFactors[i] = input; // Get the final factor
             break;
         }else {
             // Add the factor to the array of known factors and divide the current number by the factor for the next iteration
@@ -55,8 +57,7 @@ unsigned long long *factorize(unsigned long long input) {
             i++;
             input /= factor;
         }
-    }
-    pFactors[i] = input; // Get the final factor
+    }    
     // Reallocate memory for the correct numbers of factors
     unsigned long long* temp = realloc(pFactors, (i + 1) * sizeof(unsigned long long));
     if (temp == NULL) {
@@ -101,6 +102,7 @@ unsigned long long *possiblePrimeFactors(unsigned long long input) {
             arrayIndex++;
         }
     }
+    pPrimes[arrayIndex] = 0;
     return pPrimes;
 }
 
