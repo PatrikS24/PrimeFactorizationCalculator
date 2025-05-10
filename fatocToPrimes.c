@@ -15,10 +15,12 @@ int main() {
     bool validInput = false;
     while (!validInput)
     {
-        printf("Enter a positive integer between 1 and %llu that you want to factorize: ", ULONG_LONG_MAX);
+        printf("Enter a positive integer between 1 and 9999999999999999 that you want to factorize: ");
         scanf("%llu", &input);
         if(isPrime(input)) {
             printf("The input you gave is prime and can not be factorized\n\n");
+        } else if (input > 9999999999999999) {
+            printf("Please enter a number smaller than 9999999999999999\n\n");
         } else {
             validInput = true;
         }
