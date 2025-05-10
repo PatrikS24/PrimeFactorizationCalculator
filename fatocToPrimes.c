@@ -57,6 +57,7 @@ unsigned long long *factorize(unsigned long long input) {
         }
     }
     pFactors[i] = input; // Get the final factor
+    // Reallocate memory for the correct numbers of factors
     unsigned long long* temp = realloc(pFactors, (i + 1) * sizeof(unsigned long long));
     if (temp == NULL) {
         printf("Failed to reallocate memory.");
@@ -108,8 +109,8 @@ unsigned long long getFactor(unsigned long long* primeList, unsigned long long i
     if (isPrime(input)) {
         return 0;
     }
-    long i = 0;
     // Loops through the list of prime numbers to check what prime number the input can be evenly divided by
+    long i = 0;
     while (primeList[i] != 0) {
         if (input % primeList[i] == 0) {
             return primeList[i];
